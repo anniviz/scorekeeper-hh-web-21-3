@@ -23,7 +23,6 @@ export default function Form({ onSubmit }) {
         />
       </Label>
       <Button>Create game</Button>
-      {/* <button>Create game</button> */}
     </FormWrapper>
   )
 

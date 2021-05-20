@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Form from './components/Form'
 import Navigation from './components/Navigation'
@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Header from './components/Header'
 import Player from './components/Player'
 import Button from './components/Button'
+import HistoryEntry from './components/HistoryEntry'
 
 function App() {
   const [players, setPlayers] = useState([])
@@ -15,7 +16,10 @@ function App() {
   ]
   const [currentPageId, setCurrentPageId] = useState(pages[0].id)
   const [currentGame, setCurrentGame] = useState('')
-  const [savedGames, setSavedGames] = useState([''])
+  const [savedGames, setSavedGames] = useState(loadFromLocal('games') ?? [])
+  useEffect(() => {
+    saveToLocal('games', savedGames)
+  }, [savedGames])
 
   return (
     <>
@@ -47,6 +51,24 @@ function App() {
           <Button onClick={resetScores}>Reset scores</Button>
           <Button onClick={endGame}>End game</Button>
         </>
+      )}
+      {currentPageId === 'history' && (
+        <PagePlay>
+          <div>
+            {savedGames.map(game => (
+              <HistoryEntry
+                key={game.id}
+                nameOfGame={game.game}
+                players={game.players}
+              />
+            ))}
+          </div>
+          <Navigation
+            onNavigate={handleNavigation}
+            pages={pages}
+            currentPageId={currentPageId}
+          ></Navigation>
+        </PagePlay>
       )}
     </>
   )
@@ -80,11 +102,23 @@ function App() {
     setCurrentPageId('game')
   }
 
-  function handleNavigation() {}
+  function handleNavigation(id) {
+    setCurrentPageId(id)
+  }
 
   function endGame() {
-    setSavedGames([...savedGames, {}])
+    const currentGameSet = { id: uuidv4(), game: currentGame, players: players }
+    setSavedGames(savedGames => [...savedGames, currentGameSet])
     setCurrentPageId('history')
+  }
+
+  function loadFromLocal(key) {
+    const jsonString = localStorage.getItem(key)
+    return JSON.parse(jsonString)
+  }
+
+  function saveToLocal(key, data) {
+    localStorage.setItem(key, JSON.stringify(data))
   }
 }
 
