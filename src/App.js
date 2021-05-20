@@ -34,7 +34,7 @@ function App() {
         </PagePlay>
       )}
       {currentPageId === 'game' && (
-        <>
+        <ActiveGamePage>
           <Header>{currentGame}</Header>
           <PlayerList>
             {players.map((player, index) => (
@@ -50,11 +50,11 @@ function App() {
           </PlayerList>
           <Button onClick={resetScores}>Reset scores</Button>
           <Button onClick={endGame}>End game</Button>
-        </>
+        </ActiveGamePage>
       )}
       {currentPageId === 'history' && (
         <PagePlay>
-          <div>
+          <HistoryContainer>
             {savedGames.map(game => (
               <HistoryEntry
                 key={game.id}
@@ -62,7 +62,7 @@ function App() {
                 players={game.players}
               />
             ))}
-          </div>
+          </HistoryContainer>
           <Navigation
             onNavigate={handleNavigation}
             pages={pages}
@@ -72,10 +72,6 @@ function App() {
       )}
     </>
   )
-
-  function resetAll() {
-    setPlayers([])
-  }
 
   function resetScores() {
     setPlayers(players.map(player => ({ ...player, score: 0 })))
@@ -88,10 +84,6 @@ function App() {
       { ...playerToUpdate, score: playerToUpdate.score + value },
       ...players.slice(index + 1),
     ])
-  }
-
-  function createPlayer(name) {
-    setPlayers([...players, { name, score: 0 }])
   }
 
   function createGame(gameObject) {
@@ -134,6 +126,21 @@ const PlayerList = styled.ul`
   gap: 10px;
   list-style: none;
   padding: 0;
+`
+
+const HistoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 12px;
+  overflow: scroll;
+`
+
+const ActiveGamePage = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 12px;
 `
 
 export default App
