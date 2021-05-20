@@ -12,15 +12,11 @@ export default function Form({ onSubmit }) {
     <FormWrapper onSubmit={handleSubmit}>
       <Label>
         Name of game
-        <Input name="gameName" type="text" placeholder="e.g.Carcassonne" />
+        <Input name="gameName" placeholder="e.g.Carcassonne" />
       </Label>
       <Label>
         Player names
-        <Input
-          name="playerName"
-          type="text"
-          placeholder="e.g. John Doe, Jane Doe"
-        />
+        <Input name="playerName" placeholder="e.g. John Doe, Jane Doe" />
       </Label>
       <Button>Create game</Button>
     </FormWrapper>

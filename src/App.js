@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import Form from './components/Form'
-import Navigation from './components/Navigation'
 import styled from 'styled-components'
-import Header from './components/Header'
-import Player from './components/Player'
+import { v4 as uuidv4 } from 'uuid'
 import Button from './components/Button'
+import Form from './components/Form'
+import Header from './components/Header'
 import HistoryEntry from './components/HistoryEntry'
+import Navigation from './components/Navigation'
+import Player from './components/Player'
 
 function App() {
   const [players, setPlayers] = useState([])
@@ -24,14 +24,14 @@ function App() {
   return (
     <>
       {currentPageId === 'play' && (
-        <PagePlay>
+        <PageGrid>
           <Form onSubmit={createGame} />
           <Navigation
-            onNavigate={handleNavigation}
+            onNavigate={setCurrentPageId}
             pages={pages}
             currentPageId={currentPageId}
           ></Navigation>
-        </PagePlay>
+        </PageGrid>
       )}
       {currentPageId === 'game' && (
         <ActiveGamePage>
@@ -53,7 +53,7 @@ function App() {
         </ActiveGamePage>
       )}
       {currentPageId === 'history' && (
-        <PagePlay>
+        <PageGrid>
           <HistoryContainer>
             {savedGames.map(game => (
               <HistoryEntry
@@ -64,11 +64,11 @@ function App() {
             ))}
           </HistoryContainer>
           <Navigation
-            onNavigate={handleNavigation}
+            onNavigate={setCurrentPageId}
             pages={pages}
             currentPageId={currentPageId}
           ></Navigation>
-        </PagePlay>
+        </PageGrid>
       )}
     </>
   )
@@ -94,12 +94,8 @@ function App() {
     setCurrentPageId('game')
   }
 
-  function handleNavigation(id) {
-    setCurrentPageId(id)
-  }
-
   function endGame() {
-    const currentGameSet = { id: uuidv4(), game: currentGame, players: players }
+    const currentGameSet = { id: uuidv4(), game: currentGame, players }
     setSavedGames(savedGames => [...savedGames, currentGameSet])
     setCurrentPageId('history')
   }
@@ -114,12 +110,20 @@ function App() {
   }
 }
 
-const PagePlay = styled.div`
+const PageGrid = styled.div`
   display: grid;
   grid-template-rows: auto min-content;
   height: 100vh;
   gap: 20px;
 `
+
+const ActiveGamePage = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 12px;
+`
+
 const PlayerList = styled.ul`
   display: grid;
   align-content: start;
@@ -134,13 +138,6 @@ const HistoryContainer = styled.div`
   gap: 20px;
   padding: 12px;
   overflow: scroll;
-`
-
-const ActiveGamePage = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 12px;
 `
 
 export default App
