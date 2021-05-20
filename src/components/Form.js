@@ -1,31 +1,48 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+// import Button from './Button'
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  labelText: PropTypes.string,
-  placeholderText: PropTypes.string,
 }
 
-export default function Form({ onSubmit, labelText, placeholderText }) {
+export default function Form({ onSubmit }) {
   return (
-    <form onSubmit={handleSubmit}>
+    <FormWrapper onSubmit={handleSubmit}>
       <Label>
-        {labelText}
-        <Input name="name" type="text" placeholder={placeholderText} />
+        Name of game
+        <Input name="gameName" type="text" placeholder="e.g.Carcassonne" />
       </Label>
-    </form>
+      <Label>
+        Player names
+        <Input
+          name="playerName"
+          type="text"
+          placeholder="e.g. John Doe, Jane Doe"
+        />
+      </Label>
+      {/* <Button onClick={handleSubmit}>Create game</Button> */}
+      <button>CreateGame</button>
+    </FormWrapper>
   )
 
   function handleSubmit(event) {
     event.preventDefault()
     const form = event.target
-    const input = form.elements.name
-    onSubmit(input.value)
+    const game = form.elements.gameName
+    const player = form.elements.playerName
+    onSubmit({ game: game.value, player: player.value })
     form.reset()
-    input.focus()
+    game.focus()
   }
 }
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 12px;
+`
 
 const Label = styled.label`
   display: grid;

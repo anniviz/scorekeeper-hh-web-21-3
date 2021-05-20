@@ -1,35 +1,30 @@
 import { useState } from 'react'
-import './App.css'
-import Button from './components/Button'
-import Player from './components/Player'
-import PlayerForm from './components/PlayerForm'
+// import './App.css'
+import Form from './components/Form'
+import Navigation from './components/Navigation'
+import styled from 'styled-components'
 
 function App() {
   const [players, setPlayers] = useState([])
+  const pages = [
+    { title: 'Play', id: 'play' },
+    { title: 'History', id: 'history' },
+  ]
+  const [currentPageId, setCurrentPageId] = useState(pages[0].id)
 
   return (
-    <div className="App">
-      <PlayerForm onSubmit={createPlayer} />
-
-      <ul className="App__player-list">
-        {players.map((player, index) => (
-          <li>
-            <Player
-              onMinus={() => updateScore(index, -1)}
-              onPlus={() => updateScore(index, 1)}
-              key={player.name}
-              name={player.name}
-              score={player.score}
-            />
-          </li>
-        ))}
-      </ul>
-
-      <div className="App__buttons">
-        <Button onClick={resetScores}>Reset scores</Button>
-        <Button onClick={resetAll}>Reset all</Button>
-      </div>
-    </div>
+    <>
+      {currentPageId === 'play' && (
+        <PagePlay>
+          <Form onSubmit={createGame} />
+          <Navigation
+            onNavigate={handleNavigation}
+            pages={pages}
+            currentPageId={currentPageId}
+          ></Navigation>
+        </PagePlay>
+      )}
+    </>
   )
 
   function resetAll() {
@@ -52,6 +47,18 @@ function App() {
   function createPlayer(name) {
     setPlayers([...players, { name, score: 0 }])
   }
+
+  function createGame(gameObject) {
+    console.log(gameObject)
+  }
+  function handleNavigation() {}
 }
+
+const PagePlay = styled.div`
+  display: grid;
+  grid-template-rows: auto min-content;
+  height: 100vh;
+  gap: 20px;
+`
 
 export default App

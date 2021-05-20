@@ -7,7 +7,4 @@ export default {
 }
 
 export const DefaultForm = args => <Form {...args} />
-DefaultForm.args = {
-  labelText: 'Name of Game',
-  placeholderText: 'e.g. Carcassonne',
-}
+DefaultForm.args = {}
