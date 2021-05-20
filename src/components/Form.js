@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Button from './Button'
 // import Button from './Button'
 
 Form.propTypes = {
@@ -21,8 +22,8 @@ export default function Form({ onSubmit }) {
           placeholder="e.g. John Doe, Jane Doe"
         />
       </Label>
-      {/* <Button onClick={handleSubmit}>Create game</Button> */}
-      <button>CreateGame</button>
+      <Button>Create game</Button>
+      {/* <button>Create game</button> */}
     </FormWrapper>
   )
 
