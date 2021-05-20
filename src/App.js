@@ -49,7 +49,10 @@ function App() {
   }
 
   function createGame(gameObject) {
-    console.log(gameObject)
+    const players = gameObject.player.split(',').map(name => name.trim())
+    const playerWithScore = players.map(player => ({ name: player, score: 0 }))
+    setPlayers(playerWithScore)
+    // console.log(playerWithScore)
   }
   function handleNavigation() {}
 }
