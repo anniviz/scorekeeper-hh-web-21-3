@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import HistoryEntry from '../components/HistoryEntry'
 
 HistoryPage.propTypes = {
@@ -16,15 +16,15 @@ HistoryPage.propTypes = {
 
 export default function HistoryPage({ savedGames }) {
   return (
-    <HistoryContainer>
+    <Flexbox>
       {savedGames.map(({ id, game, players }) => (
         <HistoryEntry key={id} nameOfGame={game} players={players} />
       ))}
-    </HistoryContainer>
+    </Flexbox>
   )
 }
 
-const HistoryContainer = styled.div`
+const Flexbox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;

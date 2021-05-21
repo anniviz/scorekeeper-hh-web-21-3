@@ -6,9 +6,9 @@ export default {
   component: HistoryPage,
 }
 
-const DefaultHistoryPage = args => <HistoryPage {...args} />
+const Template = args => <HistoryPage {...args} />
 
-export const HistoryPageOneEntry = DefaultHistoryPage.bind({})
+export const HistoryPageOneEntry = Template.bind({})
 HistoryPageOneEntry.args = {
   savedGames: [
     {
@@ -22,7 +22,7 @@ HistoryPageOneEntry.args = {
   ],
 }
 
-export const HistoryPageThreeEntries = DefaultHistoryPage.bind({})
+export const HistoryPageThreeEntries = Template.bind({})
 HistoryPageThreeEntries.args = {
   savedGames: [
     {
