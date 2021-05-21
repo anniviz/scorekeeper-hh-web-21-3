@@ -1,5 +1,5 @@
-import './Player.css'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 Player.propTypes = {
   name: PropTypes.string,
@@ -9,13 +9,25 @@ Player.propTypes = {
 }
 export default function Player({ name, score, onMinus, onPlus }) {
   return (
-    <section className="Player">
+    <FlexContainer>
       {name}{' '}
-      <div className="Player__buttons">
+      <FlexContainer>
         <button onClick={onMinus}>-</button>
-        <output className="Player__score">{score}</output>
+        <Score>{score}</Score>
         <button onClick={onPlus}>+</button>
-      </div>
-    </section>
+      </FlexContainer>
+    </FlexContainer>
   )
 }
+
+const FlexContainer = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+`
+
+const Score = styled.output`
+  width: 3ch;
+  text-align: right;
+`
