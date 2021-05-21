@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid'
 import Button from './components/Button'
 import Form from './components/Form'
 import Header from './components/Header'
-import HistoryEntry from './components/HistoryEntry'
 import Navigation from './components/Navigation'
 import Player from './components/Player'
+import HistoryPage from './pages/HistoryPage'
 
 function App() {
   const [players, setPlayers] = useState([])
@@ -54,15 +54,7 @@ function App() {
       )}
       {currentPageId === 'history' && (
         <PageGrid>
-          <HistoryContainer>
-            {savedGames.map(game => (
-              <HistoryEntry
-                key={game.id}
-                nameOfGame={game.game}
-                players={game.players}
-              />
-            ))}
-          </HistoryContainer>
+          <HistoryPage savedGames={savedGames}></HistoryPage>
           <Navigation
             onNavigate={setCurrentPageId}
             pages={pages}
@@ -130,14 +122,6 @@ const PlayerList = styled.ul`
   gap: 10px;
   list-style: none;
   padding: 0;
-`
-
-const HistoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 12px;
-  overflow: scroll;
 `
 
 export default App
