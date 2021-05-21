@@ -6,13 +6,13 @@ import Header from '../components/Header'
 import Player from '../components/Player'
 
 CurrentGamePage.propTypes = {
+  setPlayers: PropTypes.func.isRequired,
+  setSavedGames: PropTypes.func.isRequired,
+  setCurrentPageId: PropTypes.func.isRequired,
   currentGame: PropTypes.string,
   players: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, score: PropTypes.number })
   ),
-  setPlayers: PropTypes.func,
-  setSavedGames: PropTypes.func,
-  setCurrentPageId: PropTypes.func,
 }
 
 export default function CurrentGamePage({

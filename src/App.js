@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Form from './components/Form'
+import FormPage from './pages/FormPage'
 import Navigation from './components/Navigation'
 import CurrentGamePage from './pages/CurrentGamePage'
 import HistoryPage from './pages/HistoryPage'
@@ -22,7 +22,7 @@ function App() {
     <>
       {currentPageId === 'play' && (
         <PageGrid>
-          <Form onSubmit={createGame} />
+          <FormPage onSubmit={createGame} />
           <Navigation
             onNavigate={setCurrentPageId}
             pages={pages}
