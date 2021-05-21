@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Button from './Button'
-// import Button from './Button'
+import Button from '../components/Button'
 
 Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
