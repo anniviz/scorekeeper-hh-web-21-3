@@ -19,17 +19,8 @@ function App() {
   }, [savedGames])
 
   return (
-    <>
-      {currentPageId === 'play' && (
-        <PageGrid>
-          <FormPage onSubmit={createGame} />
-          <Navigation
-            onNavigate={setCurrentPageId}
-            pages={pages}
-            currentPageId={currentPageId}
-          ></Navigation>
-        </PageGrid>
-      )}
+    <PageGrid>
+      {currentPageId === 'play' && <FormPage onSubmit={createGame} />}
       {currentPageId === 'game' && (
         <CurrentGamePage
           currentGame={currentGame}
@@ -39,17 +30,15 @@ function App() {
           setCurrentPageId={setCurrentPageId}
         />
       )}
-      {currentPageId === 'history' && (
-        <PageGrid>
-          <HistoryPage savedGames={savedGames} />
-          <Navigation
-            onNavigate={setCurrentPageId}
-            pages={pages}
-            currentPageId={currentPageId}
-          ></Navigation>
-        </PageGrid>
+      {currentPageId === 'history' && <HistoryPage savedGames={savedGames} />}
+      {currentPageId !== 'game' && (
+        <Navigation
+          onNavigate={setCurrentPageId}
+          pages={pages}
+          currentPageId={currentPageId}
+        ></Navigation>
       )}
-    </>
+    </PageGrid>
   )
 
   function createGame(gameObject) {
