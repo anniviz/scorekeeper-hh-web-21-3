@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import FormPage from './FormPage'
 
@@ -41,23 +41,29 @@ describe('FormPage', () => {
     })
   })
 
-  //   it('creates an object { game: game.value, player: player.value } when submitting the form (hit enter)', () => {
-  //     const handleSubmit = jest.fn()
+  it('creates an object { game: game.value, player: player.value } when submitting the form (hit enter)', () => {
+    const handleSubmit = jest.fn()
 
-  //     render(<FormPage onSubmit={handleSubmit} />)
+    render(<FormPage onSubmit={handleSubmit} />)
 
-  //     userEvent.type(
-  //       screen.getByRole('textbox', { name: 'Name of game' }),
-  //       'Carcassonne'
-  //     )
-  //     userEvent.type(
-  //       screen.getByRole('textbox', { name: 'Player names' }),
-  //       'John Doe, Jane Doe{enter}'
-  //     )
+    const form = screen.getByRole('form')
+    const inputGame = screen.getByRole('textbox', { name: 'Name of game' })
+    const inputPlayer = screen.getByRole('textbox', { name: 'Player names' })
 
-  //     expect(handleSubmit).toHaveBeenCalledWith({
-  //       game: 'Carcassonne',
-  //       player: 'John Doe, Jane Doe',
-  //     })
-  //   })
+    expect(form).toBeInTheDocument()
+
+    fireEvent.change(inputGame, {
+      target: { value: 'Ticket to Ride' },
+    })
+    fireEvent.change(inputPlayer, {
+      target: { value: 'Marc Mustermann, Maria Musterfrau' },
+    })
+
+    fireEvent.submit(form)
+
+    expect(handleSubmit).toHaveBeenCalledWith({
+      game: 'Ticket to Ride',
+      player: 'Marc Mustermann, Maria Musterfrau',
+    })
+  })
 })

@@ -8,7 +8,7 @@ Form.propTypes = {
 
 export default function Form({ onSubmit }) {
   return (
-    <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper onSubmit={handleSubmit} aria-label="create a game" role="form">
       <Label>
         Name of game
         <Input name="gameName" placeholder="e.g.Carcassonne" />
