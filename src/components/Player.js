@@ -9,7 +9,7 @@ Player.propTypes = {
 }
 export default function Player({ name, score, onMinus, onPlus }) {
   return (
-    <FlexContainer>
+    <FlexContainer role="player">
       {name}{' '}
       <FlexContainer>
         <button onClick={onMinus}>-</button>
@@ -20,7 +20,7 @@ export default function Player({ name, score, onMinus, onPlus }) {
   )
 }
 
-const FlexContainer = styled.section`
+const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

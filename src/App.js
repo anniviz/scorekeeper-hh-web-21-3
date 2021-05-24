@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import FormPage from './pages/FormPage'
+import { v4 as uuidv4 } from 'uuid'
 import Navigation from './components/Navigation'
 import CurrentGamePage from './pages/CurrentGamePage'
+import FormPage from './pages/FormPage'
 import HistoryPage from './pages/HistoryPage'
 
 function App() {
@@ -25,9 +26,9 @@ function App() {
         <CurrentGamePage
           currentGame={currentGame}
           players={players}
-          setPlayers={setPlayers}
-          setSavedGames={setSavedGames}
-          setCurrentPageId={setCurrentPageId}
+          updateScore={updateScore}
+          resetScores={resetScores}
+          endGame={endGame}
         />
       )}
       {currentPageId === 'history' && <HistoryPage savedGames={savedGames} />}
@@ -56,6 +57,25 @@ function App() {
 
   function saveToLocal(key, data) {
     localStorage.setItem(key, JSON.stringify(data))
+  }
+
+  function updateScore(index, value) {
+    const playerToUpdate = players[index]
+    setPlayers(players => [
+      ...players.slice(0, index),
+      { ...playerToUpdate, score: playerToUpdate.score + value },
+      ...players.slice(index + 1),
+    ])
+  }
+
+  function resetScores() {
+    setPlayers(players.map(player => ({ ...player, score: 0 })))
+  }
+
+  function endGame() {
+    const currentGameSet = { id: uuidv4(), game: currentGame, players }
+    setSavedGames(savedGames => [...savedGames, currentGameSet])
+    setCurrentPageId('history')
   }
 }
 

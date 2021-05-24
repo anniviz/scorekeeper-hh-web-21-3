@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { v4 as uuidv4 } from 'uuid'
 import Button from '../components/Button'
 import Header from '../components/Header'
 import Player from '../components/Player'
 
 CurrentGamePage.propTypes = {
-  setPlayers: PropTypes.func.isRequired,
-  setSavedGames: PropTypes.func.isRequired,
-  setCurrentPageId: PropTypes.func.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  resetScores: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
   currentGame: PropTypes.string,
   players: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, score: PropTypes.number })
@@ -16,11 +15,11 @@ CurrentGamePage.propTypes = {
 }
 
 export default function CurrentGamePage({
+  updateScore,
+  resetScores,
+  endGame,
   currentGame,
   players,
-  setPlayers,
-  setSavedGames,
-  setCurrentPageId,
 }) {
   return (
     <Flexbox>
@@ -41,25 +40,6 @@ export default function CurrentGamePage({
       <Button onClick={endGame}>End game</Button>
     </Flexbox>
   )
-
-  function updateScore(index, value) {
-    const playerToUpdate = players[index]
-    setPlayers(players => [
-      ...players.slice(0, index),
-      { ...playerToUpdate, score: playerToUpdate.score + value },
-      ...players.slice(index + 1),
-    ])
-  }
-
-  function resetScores() {
-    setPlayers(players.map(player => ({ ...player, score: 0 })))
-  }
-
-  function endGame() {
-    const currentGameSet = { id: uuidv4(), game: currentGame, players }
-    setSavedGames(savedGames => [...savedGames, currentGameSet])
-    setCurrentPageId('history')
-  }
 }
 
 const Flexbox = styled.div`
